@@ -25,10 +25,10 @@
     }
   };
   module.exports = function(dir, opts, caller){
-    var ignore, ref$, resolved, file, full;
+    var ignore, ref$, callback, resolved, file, full;
     ignore = (ref$ = opts.ignore) != null
       ? ref$
-      : [];
+      : [], callback = (ref$ = opts.callback) != null ? ref$ : require;
     caller == null && (caller = __stack[1].getFileName());
     resolved = path.resolve(path.dirname(caller), dir);
     return flatten(
@@ -44,7 +44,7 @@
           results$.push(module.exports(path.join(dir, file), opts, caller));
           break;
         case !compose$([(fn2$), path.extname])(ref1$[0]):
-          results$.push(require(full));
+          results$.push(callback(full));
         }
       }
       return results$;

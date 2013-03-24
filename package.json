@@ -1,6 +1,6 @@
 {
   "name": "require-folder",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "dependencies": {
     "callsite": "0.0.2"
   }
