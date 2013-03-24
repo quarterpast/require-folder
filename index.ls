@@ -10,7 +10,7 @@ flatten = (arr)->
 	| typeof! arr is \Array => concat-map flatten,arr
 	| otherwise => [arr]
 
-module.exports = (dir,{ignore = [], callback = require}:opts,caller = __stack.1.get-file-name!)->
+module.exports = (dir, {ignore = [], callback = require}:opts = {}, caller = __stack.1.get-file-name!)->
 	resolved = (path.dirname caller) `path.resolve` dir
 
 	for file in fs.readdir-sync resolved

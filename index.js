@@ -25,10 +25,12 @@
     }
   };
   module.exports = function(dir, opts, caller){
-    var ignore, ref$, callback, resolved, file, full;
-    ignore = (ref$ = opts.ignore) != null
-      ? ref$
-      : [], callback = (ref$ = opts.callback) != null ? ref$ : require;
+    var ref$, ignore, ref1$, callback, resolved, file, full;
+    ref$ = opts != null
+      ? opts
+      : {}, ignore = (ref1$ = ref$.ignore) != null
+      ? ref1$
+      : [], callback = (ref1$ = ref$.callback) != null ? ref1$ : require;
     caller == null && (caller = __stack[1].getFileName());
     resolved = path.resolve(path.dirname(caller), dir);
     return flatten(
