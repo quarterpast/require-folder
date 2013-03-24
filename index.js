@@ -24,8 +24,11 @@
       return [arr];
     }
   };
-  module.exports = function(dir, caller){
-    var resolved, file, full;
+  module.exports = function(dir, opts, caller){
+    var ignore, ref$, resolved, file, full;
+    ignore = (ref$ = opts.ignore) != null
+      ? ref$
+      : [];
     caller == null && (caller = __stack[1].getFileName());
     resolved = path.resolve(path.dirname(caller), dir);
     return flatten(
@@ -34,18 +37,24 @@
       for (i$ = 0, len$ = (ref$ = fs.readdirSync(resolved)).length; i$ < len$; ++i$) {
         file = ref$[i$];
         switch (ref1$ = [full = path.join(resolved, file)], false) {
-        case !compose$([fn$, fs.statSync])(ref1$[0]):
-          results$.push(module.exports(path.join(dir, file), caller));
+        case !(fn$)(ref1$[0]):
+          results$.push(typeof console.debug === 'function' ? console.debug("ignoring " + full) : void 8);
           break;
-        case !compose$([(fn1$), path.extname])(ref1$[0]):
+        case !compose$([fn1$, fs.statSync])(ref1$[0]):
+          results$.push(module.exports(path.join(dir, file), opts, caller));
+          break;
+        case !compose$([(fn2$), path.extname])(ref1$[0]):
           results$.push(require(full));
         }
       }
       return results$;
       function fn$(it){
-        return it.isDirectory();
+        return RegExp((join('|', ignore) || '$^') + '').exec(it);
       }
       function fn1$(it){
+        return it.isDirectory();
+      }
+      function fn2$(it){
         return it in require.extensions;
       }
     }()));
