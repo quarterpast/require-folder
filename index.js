@@ -1,5 +1,5 @@
 (function(){
-  var fs, path, callsite, empty, concatMap, flatten, slice$ = [].slice, toString$ = {}.toString;
+  var fs, path, callsite, empty, concatMap, flatten, join, slice$ = [].slice, toString$ = {}.toString;
   fs = require('fs');
   path = require('path');
   callsite = require('callsite');
@@ -24,6 +24,9 @@
       return [arr];
     }
   };
+  join = curry$(function(s, a){
+    return a.join(s);
+  });
   module.exports = function(dir, opts, caller){
     var ref$, ignore, ref1$, callback, resolved, file, full;
     ref$ = opts != null
